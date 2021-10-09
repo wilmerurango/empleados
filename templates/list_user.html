@@ -1,14 +1,14 @@
 {% extends 'index.html' %}
 
-{% block css %}
 <!-- tablas de bootstrap -->
-<!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">    -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+{% block css %}
+<!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
 {% endblock css %}
+
 
 
 {% block content %}
@@ -18,7 +18,7 @@
       <a href="{% url 'crear_user' %}" class="btn btn-success btn-sm" style="text-align:center" role="button" aria-pressed="true">Crear Usuario</a>
     </div>
     <br>
-    <table id="myTable" class="table table-hover" >  
+    <table id="table_wil" class="table table-hover">  
             <thead>  
               <tr>  
                 <th>Id</th>    
@@ -62,17 +62,13 @@
             </tbody>  
           </table>  
               </div>
-    </body>  
+    </body> 
+
     <script>
     $(document).ready(function(){
-        $('#myTable').dataTable();
+        $('#table_wil').dataTable();
     });
     </script>
-    
+
 
 {% endblock content %}
-
-
-{% block pie_scripts %}
-
-{% endblock pie_scripts %}

@@ -1,74 +1,91 @@
 {% extends 'index.html' %}
+{% load static %}
 
-<!-- tablas de bootstrap -->
 {% block css %}
-<!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
-<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 {% endblock css %}
 
-
-
 {% block content %}
+<div class="container-fluid">
+    <div class="row header ml-1 mt-2">
+        <a href="{% url 'crear_user' %}" class="btn btn-success btn-sm" style="text-align:center" role="button"
+            aria-pressed="true">Crear Usuario
+        </a>
 
-<div class="container mt-2">
-    <div class="row header ml-1">
-      <a href="{% url 'crear_user' %}" class="btn btn-success btn-sm" style="text-align:center" role="button" aria-pressed="true">Crear Usuario</a>
+        <hr>
+        <div class="form-group">
+            <input type="text" class="form-control pull-right" style="width:20%" id="search"
+                placeholder="Type to search table...">
+        </div>
     </div>
     <br>
-    <table id="table_wil" class="table table-hover">  
-            <thead>  
-              <tr>  
-                <th>Id</th>    
-                <th>Usuario</th>  
+
+    <table class="table pull-right table table-hover small" id="mytable" cellspacing="0" style="width: 100%;">
+        <thead>
+            <tr role="row">
+                <th>Id</th>
+                <th>Usuario</th>
                 <th>Nombre</th>
-                <th>Apellido</th>  
-                <th>E-mail</th> 
-                <th>Acción</th>
+                <th>Apellido</th>
+                <th>E-mail</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody >
+            {% if users %}
+
+            {% for user in users %}
+              <tr>  
+                <td>{{user.id}}</td>  
+                <td>{{user.username}}</td>  
+                <td>{{user.first_name}}</td>  
+                <td>{{user.last_name}}</td>  
+                <td>{{user.email}}</td>  
+                <td>
+                  <center>
+                    <div class="btn-group btn-group-sm" style="text-align:center" role="group" aria-label="..."  >
+                      <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Editar</a>
+                      <a href="#" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Eliminar</a>
+                    </div>
+                </center>
+                </td>
               </tr>  
-            </thead>  
-            <tbody> 
-              {% if users %}
+            {% endfor %}
 
-                {% for user in users %}
-                  <tr>  
-                    <td>{{user.id}}</td>  
-                    <td>{{user.username}}</td>  
-                    <td>{{user.first_name}}</td>  
-                    <td>{{user.last_name}}</td>  
-                    <td>{{user.email}}</td>  
-                    <td>
-                      <center>
-                        <div class="btn-group btn-group-sm" style="text-align:center" role="group" aria-label="..."  >
-                          <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Editar</a>
-                          <a href="#" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Eliminar</a>
-                        </div>
-                    </center>
-                    </td>
-                  </tr>  
-                {% endfor %}
+          {% else %}
 
-              {% else %}
-
-                <p>no esta llegango</p>
+            <p>no esta llegango</p>
 
 
-              {% endif %}
-              
-              
+          {% endif %}
+          
 
-            </tbody>  
-          </table>  
-              </div>
-    </body> 
+        </tbody>
+    </table>
 
-    <script>
-    $(document).ready(function(){
-        $('#table_wil').dataTable();
-    });
-    </script>
+</div>
+
 
 
 {% endblock content %}
+
+
+{% block scripts %}
+<script>
+    // Write on keyup event of keyword input element
+    $(document).ready(function () {
+        $("#search").keyup(function () {
+            _this = this;
+            // Show only matching TR, hide rest of them
+            $.each($("#mytable tbody tr"), function () {
+                if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                    $(this).hide();
+                else
+                    $(this).show();
+            });
+        });
+    });
+</script>
+
+{% endblock scripts %}
